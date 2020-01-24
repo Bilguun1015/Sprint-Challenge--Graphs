@@ -18,19 +18,6 @@ class Queue():
     def size(self):
         return len(self.queue)
 
-class Stack():
-    def __init__(self):
-        self.stack = []
-    def push(self, value):
-        self.stack.append(value)
-    def pop(self):
-        if self.size() > 0:
-            return self.stack.pop()
-        else:
-            return None
-    def size(self):
-        return len(self.stack)
-
 # Load world
 world = World()
 
@@ -93,13 +80,13 @@ def random_walk(player):
             visited[room_id][pre_room_dir] = pre_room_id
         choices = possible_exits(room_id, player, visited)
         if choices:
-            choice = random.choice(possible_exits(room_id, player, visited))
+            choice = random.choice(choices)
             player.travel(choice)
             visited[room_id][choice] = player.current_room.id
             visited_path.append([room_id, choice])
         else:
             choice = pre_room_dir
-            player.travel(pre_room_dir)
+            player.travel(choice)
             if visited_path:
                 visited_path.pop()
             else:
@@ -148,53 +135,3 @@ else:
 #         break
 #     else:
 #         print("I did not understand that command.")
-
-
-# room = Room('one','one')
-# class RoomGraph:
-#     def __init__(self):
-#         self.rooms = {}
-#         self.connected_rooms = {}
-#         self.last_id = 0
-
-#     def add_connection(self, room_id, connected_room_id):
-#         """
-#         Creates a bi-directional connection
-#         """
-#         if room_id == connected_room_id:
-#             print("WARNING: room cannot connect to itself")
-#             return False
-#         elif connected_room_id in self.connected_rooms[room_id] or room_id in self.connected_rooms[connected_room_id]:
-#             print("WARNING: This room connection already exists")
-#             return False
-#         else:
-#             self.connected_rooms[room_id].add(connected_room_id)
-#             self.connected_rooms[connected_room_id].add(room_id)
-#     def add_room(self, room_id, possible_exits):
-#         """
-#         Create a room with a sequential integer ID
-#         """
-#         self.last_id += 1
-#         self.rooms[room_id] = room
-#         self.connected_rooms[self.last_id] = possible_exits
-
-
-
-# # Create a queue/stack as appropriate
-#         stack = Stack()
-#         # Put the starting point in that
-#         stack.push(starting_vertex)
-#         # Make a set to keep track of where we've been
-#         visited = set()
-#         # While there is stuff in the queue/stack
-#         while stack.size() > 0:
-#         #    Pop the first item
-#             vertex = stack.pop()
-#         #    If not visited
-#             if vertex not in visited:
-#         #       DO THE THING!     
-#                 visited.add(vertex)
-#         #       For each edge in the item
-#                 for next_vert in self.get_neighbors(vertex):
-#         #           Add that edge to the queue/stack
-#                     stack.push(next_vert)
